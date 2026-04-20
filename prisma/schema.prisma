@@ -1,0 +1,159 @@
+// This is your Prisma schema file
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("OWNER") // OWNER, TRAINER, STAFF
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  trainer Trainer?
+}
+
+model Gym {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  address   String?
+  phone     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  equipment  Equipment[]
+  trainers   Trainer[]
+  staff      Staff[]
+  members    Member[]
+  attendance Attendance[]
+  expenses   Expense[]
+  events     Event[]
+}
+
+model Equipment {
+  id                String   @id @default(cuid())
+  name              String
+  yearOfManufacture Int
+  price             Float
+  gymId             String
+  condition         String   @default("Good") // Excellent, Good, Fair, Poor
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  gym Gym @relation(fields: [gymId], references: [id], onDelete: Cascade)
+}
+
+model Trainer {
+  id          String   @id @default(cuid())
+  name        String
+  salary      Float
+  experience  Int
+  mobileNo    String
+  reportingTo String?
+  userId      String?  @unique
+  gymId       String
+  isActive    Boolean  @default(true)
+  specialization String @default("General Fitness")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  gym        Gym        @relation(fields: [gymId], references: [id], onDelete: Cascade)
+  user       User?      @relation(fields: [userId], references: [id])
+  members    Member[]
+  attendance Attendance[]
+}
+
+model Staff {
+  id                 String   @id @default(cuid())
+  name               String
+  salary             Float
+  monthlyExpenditure Float    @default(0)
+  role               String   @default("General Staff")
+  gymId              String
+  isActive           Boolean  @default(true)
+  mobileNo           String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  gym Gym @relation(fields: [gymId], references: [id], onDelete: Cascade)
+}
+
+model Member {
+  id                String   @id @default(cuid())
+  name              String
+  ageGroup          String   // Teens (16-19), Adults (20-40), Seniors (40+)
+  gender            String   // Male, Female, Other
+  fitnessGoal       String   // Muscle Building, Weight Loss, General Fitness, Strength Training, Flexibility & Mobility
+  experienceLevel   String   // Beginner, Intermediate, Advanced
+  motivationLevel   String   // Goal-Oriented, Casual/Recreational, Medical/Rehab
+  personality       String   // Planner, Solo Trainer, Social Gym-Goer
+  membershipPlan    String   // Monthly, Quarterly, Half-Yearly, Annual
+  personalTrainerId String?
+  gymId             String
+  healthConditions  String   @default("[]") // JSON array: ["aged", "diabetic", "kneePain"]
+  isActive          Boolean  @default(true)
+  joinDate          DateTime @default(now())
+  mobileNo          String?
+  email             String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  gym             Gym        @relation(fields: [gymId], references: [id], onDelete: Cascade)
+  personalTrainer Trainer?   @relation(fields: [personalTrainerId], references: [id])
+  attendance      Attendance[]
+}
+
+model Attendance {
+  id           String    @id @default(cuid())
+  date         DateTime  @default(now())
+  checkInTime  String?
+  checkOutTime String?
+  type         String    // TRAINER or MEMBER
+  trainerId    String?
+  memberId     String?
+  gymId        String
+  status       String    @default("PRESENT") // PRESENT, ABSENT, LATE
+  notes        String?
+  createdAt    DateTime  @default(now())
+
+  gym     Gym     @relation(fields: [gymId], references: [id], onDelete: Cascade)
+  trainer Trainer? @relation(fields: [trainerId], references: [id])
+  member  Member?  @relation(fields: [memberId], references: [id])
+}
+
+model Expense {
+  id          String   @id @default(cuid())
+  title       String
+  amount      Float
+  category    String   // Equipment, Salary, Utilities, Marketing, Maintenance, Other
+  date        DateTime @default(now())
+  gymId       String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  gym Gym @relation(fields: [gymId], references: [id], onDelete: Cascade)
+}
+
+model Event {
+  id             String   @id @default(cuid())
+  title          String
+  description    String
+  date           DateTime
+  targetAudience String   // ALL, TRAINERS, MEMBERS
+  gymId          String
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  gym Gym @relation(fields: [gymId], references: [id], onDelete: Cascade)
+}
