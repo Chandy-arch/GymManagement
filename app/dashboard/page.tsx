@@ -32,7 +32,7 @@ export default function DashboardPage() {
   }, []);
 
   return (
-    <div className="paint-splash min-h-[calc(100vh-4rem)] p-6 md:p-10">
+    <div className="paint-splash min-h-[calc(100vh-4rem)] p-4 md:p-6 lg:p-10">
       {/* Welcome banner */}
       <div className="relative mb-10">
         <div className="absolute inset-0 rounded-3xl overflow-hidden">
@@ -55,17 +55,17 @@ export default function DashboardPage() {
               total members
             </p>
           </div>
-          <div className="flex gap-3">
-            <div className="bg-zinc-800/80 rounded-2xl px-5 py-3 text-center border border-zinc-700/50">
-              <p className="text-2xl font-black text-white">{gyms.reduce((a, g) => a + g._count.members, 0)}</p>
+          <div className="flex gap-2 md:gap-3 flex-wrap">
+            <div className="bg-zinc-800/80 rounded-2xl px-4 md:px-5 py-3 text-center border border-zinc-700/50">
+              <p className="text-xl md:text-2xl font-black text-white">{gyms.reduce((a, g) => a + g._count.members, 0)}</p>
               <p className="text-xs text-zinc-500 mt-0.5">Members</p>
             </div>
-            <div className="bg-zinc-800/80 rounded-2xl px-5 py-3 text-center border border-zinc-700/50">
-              <p className="text-2xl font-black text-red-400">{gyms.reduce((a, g) => a + g._count.trainers, 0)}</p>
+            <div className="bg-zinc-800/80 rounded-2xl px-4 md:px-5 py-3 text-center border border-zinc-700/50">
+              <p className="text-xl md:text-2xl font-black text-red-400">{gyms.reduce((a, g) => a + g._count.trainers, 0)}</p>
               <p className="text-xs text-zinc-500 mt-0.5">Trainers</p>
             </div>
-            <div className="bg-zinc-800/80 rounded-2xl px-5 py-3 text-center border border-zinc-700/50">
-              <p className="text-2xl font-black text-white">{gyms.reduce((a, g) => a + g._count.staff, 0)}</p>
+            <div className="bg-zinc-800/80 rounded-2xl px-4 md:px-5 py-3 text-center border border-zinc-700/50">
+              <p className="text-xl md:text-2xl font-black text-white">{gyms.reduce((a, g) => a + g._count.staff, 0)}</p>
               <p className="text-xs text-zinc-500 mt-0.5">Staff</p>
             </div>
           </div>

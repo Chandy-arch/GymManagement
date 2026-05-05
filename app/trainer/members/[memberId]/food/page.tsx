@@ -45,7 +45,7 @@ export default function MemberFoodPage() {
   const hasCombined = healthConditions.length >= 2;
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-4 md:p-6 space-y-4 md:space-y-6">
       {/* Back */}
       <Link href="/trainer/members" className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors">
         ← Back to Members

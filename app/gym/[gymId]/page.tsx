@@ -55,7 +55,7 @@ export default function GymOverviewPage({ params }: { params: { gymId: string } 
   const upcomingEvents = data.events.filter(e => new Date(e.date) >= new Date()).slice(0, 3);
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-4 md:p-6 space-y-4 md:space-y-6">
       {/* Gym banner */}
       <div className="relative bg-gradient-to-br from-zinc-900 to-zinc-950 rounded-3xl p-8 overflow-hidden border border-zinc-800">
         <div className="absolute top-0 right-0 w-80 h-64 opacity-15 rounded-full"

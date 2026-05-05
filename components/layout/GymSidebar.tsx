@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 interface GymSidebarProps {
   gymId: string;
   gymName: string;
+  onClose?: () => void;
 }
 
 const navItems = [
@@ -19,12 +20,12 @@ const navItems = [
   { href: '/events', label: 'Events & Announcements', icon: '📢' },
 ];
 
-export default function GymSidebar({ gymId, gymName }: GymSidebarProps) {
+export default function GymSidebar({ gymId, gymName, onClose }: GymSidebarProps) {
   const pathname = usePathname();
   const basePath = `/gym/${gymId}`;
 
   return (
-    <aside className="w-64 min-h-[calc(100vh-4rem)] bg-zinc-950/80 border-r border-zinc-800/50 flex flex-col">
+    <aside className="w-64 h-full min-h-[calc(100vh-4rem)] bg-zinc-950 border-r border-zinc-800/50 flex flex-col overflow-y-auto">
       {/* Gym info */}
       <div className="p-5 border-b border-zinc-800/50">
         <div className="flex items-center gap-3">
@@ -50,6 +51,7 @@ export default function GymSidebar({ gymId, gymName }: GymSidebarProps) {
             <Link
               key={item.href}
               href={href}
+              onClick={onClose}
               className={`sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
                 isActive
                   ? 'active bg-red-600/10 text-red-400 border-l-0'
@@ -70,6 +72,7 @@ export default function GymSidebar({ gymId, gymName }: GymSidebarProps) {
       <div className="p-3 border-t border-zinc-800/50">
         <Link
           href="/dashboard"
+          onClick={onClose}
           className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-zinc-500 hover:text-white hover:bg-zinc-800/60 transition-all"
         >
           <span>←</span>

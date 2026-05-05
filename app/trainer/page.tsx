@@ -69,16 +69,16 @@ export default function TrainerDashboardPage() {
 
   if (loading) {
     return (
-      <div className="p-6 space-y-4">
+      <div className="p-4 md:p-6 space-y-4">
         {[...Array(3)].map((_, i) => <div key={i} className="skeleton h-28 rounded-2xl" />)}
       </div>
     );
   }
 
-  if (!trainer) return <div className="p-6 text-zinc-400">Trainer profile not found</div>;
+  if (!trainer) return <div className="p-4 md:p-6 text-zinc-400">Trainer profile not found</div>;
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-4 md:p-6 space-y-4 md:space-y-6">
       {/* Welcome */}
       <div className="bg-gradient-to-br from-zinc-900 to-zinc-950 border border-zinc-800 rounded-3xl p-8 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-72 h-56 opacity-10 rounded-full"

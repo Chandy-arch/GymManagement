@@ -39,7 +39,7 @@ export default function TrainerAttendancePage() {
   const lateDays = records.filter(r => r.status === 'LATE').length;
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-4 md:p-6 space-y-4 md:space-y-6">
       <div>
         <h1 className="text-2xl font-black text-white flex items-center gap-2">📅 My Attendance</h1>
         <p className="text-zinc-500 text-sm">Your attendance history</p>

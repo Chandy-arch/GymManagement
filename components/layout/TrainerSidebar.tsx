@@ -13,13 +13,14 @@ const navItems = [
 interface TrainerSidebarProps {
   trainerName: string;
   gymName: string;
+  onClose?: () => void;
 }
 
-export default function TrainerSidebar({ trainerName, gymName }: TrainerSidebarProps) {
+export default function TrainerSidebar({ trainerName, gymName, onClose }: TrainerSidebarProps) {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 min-h-[calc(100vh-4rem)] bg-zinc-950/80 border-r border-zinc-800/50 flex flex-col">
+    <aside className="w-64 h-full min-h-[calc(100vh-4rem)] bg-zinc-950 border-r border-zinc-800/50 flex flex-col overflow-y-auto">
       {/* Trainer info */}
       <div className="p-5 border-b border-zinc-800/50">
         <div className="flex items-center gap-3">
@@ -43,6 +44,7 @@ export default function TrainerSidebar({ trainerName, gymName }: TrainerSidebarP
             <Link
               key={item.href}
               href={item.href}
+              onClick={onClose}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
                 isActive
                   ? 'bg-blue-600/10 text-blue-400'
